@@ -1,4 +1,4 @@
-package com.lidachui.simpleRpc.codec;
+package com.lidachui.simpleRpc.serialize;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

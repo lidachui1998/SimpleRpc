@@ -1,4 +1,4 @@
-package com.lidachui.simpleRpc.codec;
+package com.lidachui.simpleRpc.serialize;
 
 /**
  * 序列化接口

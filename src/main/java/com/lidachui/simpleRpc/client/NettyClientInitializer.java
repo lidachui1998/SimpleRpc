@@ -1,9 +1,9 @@
 package com.lidachui.simpleRpc.client;
 
 
-import com.lidachui.simpleRpc.codec.JsonSerializer;
-import com.lidachui.simpleRpc.codec.MyDecode;
-import com.lidachui.simpleRpc.codec.MyEncode;
+import com.lidachui.simpleRpc.serialize.JsonSerializer;
+import com.lidachui.simpleRpc.serialize.MyDecode;
+import com.lidachui.simpleRpc.serialize.MyEncode;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

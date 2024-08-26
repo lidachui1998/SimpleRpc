@@ -1,4 +1,4 @@
-package com.lidachui.simpleRpc.codec;
+package com.lidachui.simpleRpc.serialize;
 
 import com.lidachui.simpleRpc.constants.MessageType;
 import io.netty.buffer.ByteBuf;
