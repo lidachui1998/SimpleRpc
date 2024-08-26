@@ -1,6 +1,7 @@
 package com.lidachui.simpleRpc.condition;
 
 import com.lidachui.simpleRpc.annotation.RpcClient;
+import com.lidachui.simpleRpc.annotation.RpcServer;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -21,12 +22,14 @@ public class OnRpcClientCondition implements Condition {
 
   @Override
   public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    ConfigurableListableBeanFactory beanFactory = context.getBeanFactory();
-    for (String beanName : beanFactory.getBeanDefinitionNames()) {
-      Object bean = beanFactory.getBean(beanName);
-      if (bean.getClass().isAnnotationPresent(RpcClient.class)) {
+    String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
+    try {
+      Class<?> mainClass = Class.forName(mainClassName);
+      if (mainClass.isAnnotationPresent(RpcClient.class)) {
         return true;
       }
+    } catch (Exception e) {
+      return false;
     }
     return false;
   }
