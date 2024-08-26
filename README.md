@@ -64,6 +64,10 @@ public class MyClientApplication {
 import com.lidachui.simpleRpc.annotation.RpcService;
 
 @RpcService
+public interface MyService{
+    String sayHello(String name);
+}
+
 public class MyServiceImpl implements MyService {
     @Override
     public String sayHello(String name) {
