@@ -77,9 +77,7 @@ public class RpcAutoConfiguration {
             if (annotation != null) {
                 int port = annotation.port();
                 RpcServer RPCServer = new NettyRpcServer(serviceProvider);
-                simpleRpcThreadPool.execute(() ->{
-                    RPCServer.start(port);
-                });
+                simpleRpcThreadPool.execute(() -> RPCServer.start(port));
                 return RPCServer;
             }
         } catch (ClassNotFoundException e) {
@@ -104,14 +102,12 @@ public class RpcAutoConfiguration {
     @Bean
     @Conditional(OnRpcClientCondition.class)
     public RpcReferenceProcessor rpcReferenceProcessor(RpcClientProxy rpcClientProxy) {
-        System.out.println("RpcReferenceProcessor bean created");
         return new RpcReferenceProcessor(rpcClientProxy);
     }
 
     @Bean
     @Conditional(OnRpcServerCondition.class)
     public RpcServiceProcessor rpcServiceProcessor(ServiceProvider serviceProvider) {
-        System.out.println("RpcServiceProcessor bean created");
         return new RpcServiceProcessor(serviceProvider);
     }
 

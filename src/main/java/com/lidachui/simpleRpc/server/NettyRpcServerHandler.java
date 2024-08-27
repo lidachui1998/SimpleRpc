@@ -5,7 +5,6 @@ import com.lidachui.simpleRpc.core.RpcResponse;
 import com.lidachui.simpleRpc.core.ServiceProvider;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import lombok.AllArgsConstructor;
 

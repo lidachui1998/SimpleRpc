@@ -25,10 +25,25 @@
       <artifactId>guava</artifactId>
       <version>31.0.1-jre</version>
     </dependency>
+    <!-- Jackson 核心模块 -->
     <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.35</version>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.15.2</version>
+    </dependency>
+
+    <!-- 可选：如果需要处理 JSON 树结构 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.15.2</version>
+    </dependency>
+
+    <!-- 可选：如果需要处理带有注解的类 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.15.2</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
