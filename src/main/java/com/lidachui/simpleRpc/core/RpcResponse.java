@@ -60,7 +60,7 @@ public class RpcResponse {
                     .append("Error occurred while getting exception message: ")
                     .append(e.getMessage());
         }
-        return RpcResponse.builder().code(500).message(printMessage.toString()).build();
+        return RpcResponse.builder().code(500).message(printMessage.toString()).dataType(String.class).build();
     }
 
     /**
@@ -79,6 +79,6 @@ public class RpcResponse {
      * @return {@code RpcResponse }
      */
     public static RpcResponse fail() {
-        return RpcResponse.builder().code(500).message("服务器发生错误").build();
+        return RpcResponse.builder().code(500).message("服务器发生错误").dataType(String.class).build();
     }
 }
