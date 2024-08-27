@@ -3,7 +3,6 @@ package com.lidachui.simpleRpc.core;
 import com.lidachui.simpleRpc.annotation.RpcService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
 
 public class RpcServiceProcessor implements BeanPostProcessor {
 

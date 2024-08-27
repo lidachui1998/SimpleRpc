@@ -4,7 +4,6 @@ import com.lidachui.simpleRpc.annotation.RpcReference;
 import java.lang.reflect.Field;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
 
 /**
  * RpcClientProcessor
