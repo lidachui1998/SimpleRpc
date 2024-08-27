@@ -9,13 +9,13 @@ package com.lidachui.simpleRpc.core;
  */
 public interface RpcServer {
 
-  /**
-   * 开始
-   *
-   * @param port 港口
-   */
-  void start(int port);
+    /**
+     * 开始
+     *
+     * @param port 港口
+     */
+    void start(int port);
 
-  /** 停止 */
-  void stop();
+    /** 停止 */
+    void stop();
 }

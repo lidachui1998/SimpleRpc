@@ -11,19 +11,19 @@ import com.lidachui.simpleRpc.client.NettyRpcClient.Callback;
  */
 public interface RpcClient {
 
-  /**
-   * 发送请求（阻塞）
-   *
-   * @param request 请求
-   * @return {@code RpcResponse }
-   */
-  RpcResponse sendRequest(RpcRequest request);
+    /**
+     * 发送请求（阻塞）
+     *
+     * @param request 请求
+     * @return {@code RpcResponse }
+     */
+    RpcResponse sendRequest(RpcRequest request);
 
-  /**
-   * 发送请求(回调)
-   *
-   * @param request 请求
-   * @param callback 回拨
-   */
-  void sendRequest(RpcRequest request, Callback<RpcResponse> callback);
+    /**
+     * 发送请求(回调)
+     *
+     * @param request 请求
+     * @param callback 回拨
+     */
+    void sendRequest(RpcRequest request, Callback<RpcResponse> callback);
 }

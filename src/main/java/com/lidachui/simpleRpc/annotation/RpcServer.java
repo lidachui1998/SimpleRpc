@@ -17,5 +17,4 @@ import java.lang.annotation.Target;
 public @interface RpcServer {
 
     int port() default 8899;
-
 }

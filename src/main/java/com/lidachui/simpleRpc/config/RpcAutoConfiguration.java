@@ -42,7 +42,7 @@ public class RpcAutoConfiguration {
             if (annotation != null) {
                 String host = annotation.host();
                 int port = annotation.port();
-              return new NettyRpcClient(host, port);
+                return new NettyRpcClient(host, port);
             }
         } catch (ClassNotFoundException e) {
             // 处理异常
@@ -54,21 +54,22 @@ public class RpcAutoConfiguration {
     @Bean(destroyMethod = "shutdown", name = "simpleRpcThreadPool")
     @Conditional(OnRpcServerCondition.class)
     public ThreadPoolExecutor simpleRpcThreadPool() {
-        ThreadFactory tf = new ThreadFactoryBuilder().setNameFormat(
-            "simpleRpcThreadPool-%d").build();
+        ThreadFactory tf =
+                new ThreadFactoryBuilder().setNameFormat("simpleRpcThreadPool-%d").build();
         return new ThreadPoolExecutor(
-            Runtime.getRuntime().availableProcessors(),
-            Runtime.getRuntime().availableProcessors(),
-            200,
-            TimeUnit.MILLISECONDS,
-            new ArrayBlockingQueue<>(10),
-            tf,
-            new ThreadPoolExecutor.CallerRunsPolicy());
+                Runtime.getRuntime().availableProcessors(),
+                Runtime.getRuntime().availableProcessors(),
+                200,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                tf,
+                new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
     @Bean
     @Conditional(OnRpcServerCondition.class)
-    public RpcServer rpcServer(ServiceProvider serviceProvider,ThreadPoolExecutor simpleRpcThreadPool) {
+    public RpcServer rpcServer(
+            ServiceProvider serviceProvider, ThreadPoolExecutor simpleRpcThreadPool) {
         String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
         try {
             Class<?> mainClass = Class.forName(mainClassName);
@@ -110,5 +111,4 @@ public class RpcAutoConfiguration {
     public RpcServiceProcessor rpcServiceProcessor(ServiceProvider serviceProvider) {
         return new RpcServiceProcessor(serviceProvider);
     }
-
 }

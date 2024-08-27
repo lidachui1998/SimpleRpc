@@ -20,17 +20,17 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
  */
 public class OnRpcClientCondition implements Condition {
 
-  @Override
-  public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
-    try {
-      Class<?> mainClass = Class.forName(mainClassName);
-      if (mainClass.isAnnotationPresent(RpcClient.class)) {
-        return true;
-      }
-    } catch (Exception e) {
-      return false;
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
+        try {
+            Class<?> mainClass = Class.forName(mainClassName);
+            if (mainClass.isAnnotationPresent(RpcClient.class)) {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
-    return false;
-  }
 }

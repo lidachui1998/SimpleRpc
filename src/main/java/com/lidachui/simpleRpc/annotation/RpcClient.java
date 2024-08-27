@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * RpcClient
+ *
  * @author: lihuijie
  * @date: 2024/8/26 21:48
  * @version: 1.0
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

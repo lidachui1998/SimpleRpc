@@ -14,17 +14,17 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  */
 public class OnRpcServerCondition implements Condition {
 
-  @Override
-  public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
-    try {
-      Class<?> mainClass = Class.forName(mainClassName);
-      if (mainClass.isAnnotationPresent(RpcServer.class)) {
-        return true;
-      }
-    } catch (Exception e) {
-      return false;
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        String mainClassName = System.getProperty("sun.java.command").split(" ")[0];
+        try {
+            Class<?> mainClass = Class.forName(mainClassName);
+            if (mainClass.isAnnotationPresent(RpcServer.class)) {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
-    return false;
-  }
 }

@@ -9,5 +9,5 @@ package com.lidachui.simpleRpc.constants;
  */
 public interface Constants {
 
-  String NETTY_KEY = "RpcResponse";
+    String NETTY_KEY = "RpcResponse";
 }

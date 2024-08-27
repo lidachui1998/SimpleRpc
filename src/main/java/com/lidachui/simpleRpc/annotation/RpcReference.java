@@ -16,6 +16,4 @@ import javax.annotation.Resource;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Resource
-public @interface RpcReference {
-}
-
+public @interface RpcReference {}

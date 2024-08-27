@@ -12,11 +12,11 @@ import com.lidachui.simpleRpc.service.UserService;
  */
 public class NettyTest {
 
-  public static void main(String[] args){
-    NettyRpcClient nettyRpcClient = new NettyRpcClient("127.0.0.1", 8899);
-    RpcClientProxy rpcClientProxy = new RpcClientProxy(nettyRpcClient);
-    UserService userService = rpcClientProxy.getProxy(UserService.class);
-    User userByUserId = userService.getUserByUserId(10);
-    System.out.println("从服务端得到的user为：" + userByUserId);
-  }
+    public static void main(String[] args) {
+        NettyRpcClient nettyRpcClient = new NettyRpcClient("127.0.0.1", 8899);
+        RpcClientProxy rpcClientProxy = new RpcClientProxy(nettyRpcClient);
+        UserService userService = rpcClientProxy.getProxy(UserService.class);
+        User userByUserId = userService.getUserByUserId(10);
+        System.out.println("从服务端得到的user为：" + userByUserId);
+    }
 }

@@ -15,27 +15,28 @@ import org.springframework.stereotype.Component;
  */
 public class RpcReferenceProcessor implements BeanPostProcessor {
 
-  private final RpcClientProxy rpcClientProxy;
+    private final RpcClientProxy rpcClientProxy;
 
-  // 构造器注入 RpcClientProxy
-  public RpcReferenceProcessor(RpcClientProxy rpcClientProxy) {
-    this.rpcClientProxy = rpcClientProxy;
-  }
-
-  @Override
-  public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-    Field[] fields = bean.getClass().getDeclaredFields();
-    for (Field field : fields) {
-      if (field.isAnnotationPresent(RpcReference.class)) {
-        field.setAccessible(true);
-        Object proxy = rpcClientProxy.getProxy(field.getType());
-        try {
-          field.set(bean, proxy);
-        } catch (IllegalAccessException e) {
-          e.printStackTrace();
-        }
-      }
+    // 构造器注入 RpcClientProxy
+    public RpcReferenceProcessor(RpcClientProxy rpcClientProxy) {
+        this.rpcClientProxy = rpcClientProxy;
     }
-    return bean;
-  }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName)
+            throws BeansException {
+        Field[] fields = bean.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(RpcReference.class)) {
+                field.setAccessible(true);
+                Object proxy = rpcClientProxy.getProxy(field.getType());
+                try {
+                    field.set(bean, proxy);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bean;
+    }
 }

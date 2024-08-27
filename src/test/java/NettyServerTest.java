@@ -14,15 +14,15 @@ import com.lidachui.simpleRpc.service.UserServiceImpl;
  * @version: 1.0
  */
 public class NettyServerTest {
-  public static void main(String[] args){
-    UserService userService = new UserServiceImpl();
-    BlogService blogService = new BlogServiceImpl();
+    public static void main(String[] args) {
+        UserService userService = new UserServiceImpl();
+        BlogService blogService = new BlogServiceImpl();
 
-    ServiceProvider serviceProvider = new ServiceProvider();
-    serviceProvider.provideServiceInterface(userService);
-    serviceProvider.provideServiceInterface(blogService);
+        ServiceProvider serviceProvider = new ServiceProvider();
+        serviceProvider.provideServiceInterface(userService);
+        serviceProvider.provideServiceInterface(blogService);
 
-    RpcServer RPCServer = new NettyRpcServer(serviceProvider);
-    RPCServer.start(8899);
-  }
+        RpcServer RPCServer = new NettyRpcServer(serviceProvider);
+        RPCServer.start(8899);
+    }
 }
