@@ -22,6 +22,11 @@ public class RpcClientProxy implements InvocationHandler {
 
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    // 处理 Object 类的方法，如 toString, equals, hashCode
+    if (method.getDeclaringClass() == Object.class) {
+      return method.invoke(this, args);
+    }
+
     if(client != null){
       // request的构建，使用了lombok中的builder，代码简洁
       RpcRequest request = RpcRequest.builder().interfaceName(method.getDeclaringClass().getName())
