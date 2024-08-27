@@ -1,23 +1,14 @@
 package com.lidachui.simpleRpc.core;
+import com.lidachui.simpleRpc.annotation.RpcService;
 
+import java.util.HashMap;
+import java.util.Map;
 /**
  * ServiceProvider
  *
  * @author: lihuijie
  * @date: 2024/8/26 10:26
  * @version: 1.0
- */
-
-import com.lidachui.simpleRpc.annotation.RpcService;
-
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * 之前这里使用Map简单实现的
- * 存放服务接口名与服务端对应的实现类
- * 服务启动时要暴露其相关的实现类0
- * 根据request中的interface调用服务端中相关实现类
  */
 public class ServiceProvider {
   /**

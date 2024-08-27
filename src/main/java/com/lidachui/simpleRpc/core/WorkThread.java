@@ -15,11 +15,6 @@ import lombok.AllArgsConstructor;
  * @date: 2024/8/26 10:20
  * @version: 1.0
  */
-
-/**
- * 这里负责解析得到的request请求，执行服务方法，返回给客户端 1. 从request得到interfaceName 2. 根据interfaceName在serviceProvide
- * Map中获取服务端的实现类 3. 从request中得到方法名，参数， 利用反射执行服务中的方法 4. 得到结果，封装成response，写入socket
- */
 @AllArgsConstructor
 public class WorkThread implements Runnable {
   private Socket socket;
