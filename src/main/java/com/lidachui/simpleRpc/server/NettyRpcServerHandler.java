@@ -7,6 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import java.lang.reflect.Method;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * NettyRPCServerHandler
@@ -17,11 +19,14 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public class NettyRpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
+    private static final Logger logger = LoggerFactory.getLogger(NettyRpcServerHandler.class);
+
+
     private ServiceProvider serviceProvider;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
-        System.out.println(msg);
+        logger.info("收到客户端请求:{}", msg);
         RpcResponse response = getResponse(msg);
         ctx.writeAndFlush(response);
         ctx.close();
@@ -46,8 +51,8 @@ public class NettyRpcServerHandler extends SimpleChannelInboundHandler<RpcReques
             Object invoke = method.invoke(service, request.getParams());
             return RpcResponse.success(invoke);
         } catch (Exception e) {
-            e.printStackTrace();
-            return RpcResponse.fail(e);
+            logger.error("RPC:请求报错!",e);
+            return RpcResponse.fail(e,"RPC:请求报错!");
         }
     }
 }

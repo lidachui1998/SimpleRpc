@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import static com.lidachui.simpleRpc.constants.Constants.SUCCESS;
+
 /**
  * RPCClientProxy
  *
@@ -36,7 +38,11 @@ public class RpcClientProxy implements InvocationHandler {
                             .paramsTypes(method.getParameterTypes())
                             .build();
             RpcResponse response = client.sendRequest(request);
-            return response.getData();
+            if (response.getCode().equals(SUCCESS)){
+                return response.getData();
+            }else {
+                throw new RuntimeException(response.getMessage());
+            }
         }
         return RpcResponse.fail();
     }

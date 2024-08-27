@@ -7,6 +7,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * WorkThread
@@ -17,6 +19,10 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public class WorkThread implements Runnable {
+
+    private static final Logger logger = LoggerFactory.getLogger(WorkThread.class);
+
+
     private Socket socket;
     private ServiceProvider serviceProvider;
 
@@ -33,8 +39,7 @@ public class WorkThread implements Runnable {
             oos.writeObject(response);
             oos.flush();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("从IO中读取数据错误");
+            logger.error("从IO中读取数据错误", e);
         }
     }
 
@@ -52,7 +57,7 @@ public class WorkThread implements Runnable {
             return RpcResponse.success(invoke);
         } catch (Exception e) {
             e.printStackTrace();
-            return RpcResponse.fail(e);
+            return RpcResponse.fail(e,"RPC:请求报错!");
         }
     }
 }

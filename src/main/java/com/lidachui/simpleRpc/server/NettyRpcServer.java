@@ -7,6 +7,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * NettyRPCServer
@@ -18,6 +21,10 @@ import lombok.AllArgsConstructor;
 /** 实现RPCServer接口，负责监听与发送数据 */
 @AllArgsConstructor
 public class NettyRpcServer implements RpcServer {
+
+    private static final Logger logger = LoggerFactory.getLogger(NettyRpcServer.class);
+
+
     private ServiceProvider serviceProvider;
 
     @Override
@@ -25,7 +32,8 @@ public class NettyRpcServer implements RpcServer {
         // netty 服务线程组boss负责建立连接， work负责具体的请求
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workGroup = new NioEventLoopGroup();
-        System.out.printf("Netty服务端启动了...");
+        logger.info("Rpc server started on port {} with service provider {}", port, serviceProvider.getClass().getName());
+
         try {
             // 启动netty服务器
             ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -39,7 +47,8 @@ public class NettyRpcServer implements RpcServer {
             // 死循环监听
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("Netty server encountered an exception", e);
+            Thread.currentThread().interrupt();
         } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();

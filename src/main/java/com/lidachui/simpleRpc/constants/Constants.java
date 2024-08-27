@@ -10,4 +10,8 @@ package com.lidachui.simpleRpc.constants;
 public interface Constants {
 
     String NETTY_KEY = "RpcResponse";
+
+    Integer SUCCESS = 200;
+
+    Integer FAIL = 500;
 }

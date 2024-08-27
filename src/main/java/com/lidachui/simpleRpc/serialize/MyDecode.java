@@ -6,6 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 按照自定义的消息格式解码数据
@@ -16,6 +18,8 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public class MyDecode extends ByteToMessageDecoder {
+    private static final Logger logger = LoggerFactory.getLogger(MyDecode.class);
+
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out)
@@ -25,7 +29,7 @@ public class MyDecode extends ByteToMessageDecoder {
         // 现在还只支持request与response请求
         if (messageType != MessageType.REQUEST.getCode()
                 && messageType != MessageType.RESPONSE.getCode()) {
-            System.out.println("暂不支持此种数据");
+            logger.error("不支持的消息类型");
             return;
         }
         // 2. 读取序列化的类型

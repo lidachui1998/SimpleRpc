@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SimpleRpcClient
@@ -19,6 +21,8 @@ import lombok.AllArgsConstructor;
  */
 @AllArgsConstructor
 public class SimpleRpcClient implements RpcClient {
+    private static final Logger logger = LoggerFactory.getLogger(SimpleRpcClient.class);
+
     private String host;
     private int port;
 
@@ -33,16 +37,13 @@ public class SimpleRpcClient implements RpcClient {
                     new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-            System.out.println(request);
+            logger.info(request.toString());
             objectOutputStream.writeObject(request);
             objectOutputStream.flush();
-
             RpcResponse response = (RpcResponse) objectInputStream.readObject();
-
-            // System.out.println(response.getData());
             return response;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println();
+            logger.error("发送请求失败", e);
             return null;
         }
     }
@@ -63,16 +64,15 @@ public class SimpleRpcClient implements RpcClient {
                     new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-            System.out.println(request);
+            logger.info(request.toString());
             objectOutputStream.writeObject(request);
             objectOutputStream.flush();
 
             RpcResponse response = (RpcResponse) objectInputStream.readObject();
 
-            // System.out.println(response.getData());
             callback.onSuccess(response);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println();
+            logger.error("发送请求失败", e);
             callback.onFailure(e);
         }
     }

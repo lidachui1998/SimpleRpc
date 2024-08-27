@@ -4,6 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lidachui.simpleRpc.core.RpcRequest;
 import com.lidachui.simpleRpc.core.RpcResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.lidachui.simpleRpc.constants.Constants.FAIL;
+import static com.lidachui.simpleRpc.constants.Constants.SUCCESS;
 
 /**
  * JsonSerializer
@@ -13,6 +18,8 @@ import com.lidachui.simpleRpc.core.RpcResponse;
  * @version: 1.0
  */
 public class JsonSerializer implements Serializer {
+    private static final Logger logger = LoggerFactory.getLogger(JsonSerializer.class);
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -55,20 +62,29 @@ public class JsonSerializer implements Serializer {
                     break;
                 case 1:
                     RpcResponse response = objectMapper.readValue(bytes, RpcResponse.class);
-                    Class<?> dataType = response.getDataType();
-                    // Jackson处理转换为Java对象
-                    if (!dataType.isAssignableFrom(response.getData().getClass())) {
-                        response.setData(objectMapper.convertValue(response.getData(), dataType));
+                    if (response.getCode().equals(SUCCESS)) {
+                        Class<?> dataType = response.getDataType();
+                        // Jackson处理转换为Java对象
+                        if (!dataType.isAssignableFrom(response.getData().getClass())) {
+                            response.setData(
+                                    objectMapper.convertValue(response.getData(), dataType));
+                        }
+                        obj = response;
+                        break;
+                    } else if (response.getCode().equals(FAIL)) {
+                        return response;
+                    } else {
+                        logger.error("暂时不支持此种消息");
+                        throw new RuntimeException("暂时不支持此种消息");
                     }
-                    obj = response;
-                    break;
                 default:
-                    System.out.println("暂时不支持此种消息");
+                    logger.error("暂时不支持此种消息");
                     throw new RuntimeException("暂时不支持此种消息");
             }
             return obj;
         } catch (Exception e) {
-            throw new RuntimeException("反序列化失败", e);
+            logger.error("RPC:反序列化失败!", e);
+            return RpcResponse.fail(e, "RPC:反序列化失败!");
         }
     }
 

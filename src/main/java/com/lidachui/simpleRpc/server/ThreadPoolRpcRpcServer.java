@@ -3,6 +3,9 @@ package com.lidachui.simpleRpc.server;
 import com.lidachui.simpleRpc.core.RpcServer;
 import com.lidachui.simpleRpc.core.ServiceProvider;
 import com.lidachui.simpleRpc.core.WorkThread;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,6 +22,8 @@ import java.util.concurrent.TimeUnit;
  * @version: 1.0
  */
 public class ThreadPoolRpcRpcServer implements RpcServer {
+    private static final Logger logger = LoggerFactory.getLogger(ThreadPoolRpcRpcServer.class);
+
     private final ThreadPoolExecutor threadPool;
     private ServiceProvider serviceProvider;
 
@@ -49,7 +54,7 @@ public class ThreadPoolRpcRpcServer implements RpcServer {
 
     @Override
     public void start(int port) {
-        System.out.println("服务端启动了");
+        logger.info("服务端启动了");
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             while (true) {
@@ -57,7 +62,7 @@ public class ThreadPoolRpcRpcServer implements RpcServer {
                 threadPool.execute(new WorkThread(socket, serviceProvider));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("服务器启动失败", e);
         }
     }
 
