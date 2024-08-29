@@ -29,7 +29,7 @@ public class ServiceProvider {
         Class<?>[] interfaces = service.getClass().getInterfaces();
 
         for (Class<?> iface : interfaces) {
-            if (iface.isAnnotationPresent(RpcService.class)) {
+            if (iface.isAnnotationPresent(RpcService.class) || service.getClass().isAnnotationPresent(RpcService.class)) {
                 // 将接口名作为 key，服务实现类对象作为 value 存储
                 interfaceProvider.put(iface.getName(), service);
             }

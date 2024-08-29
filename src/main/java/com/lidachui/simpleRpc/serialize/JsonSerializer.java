@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lidachui.simpleRpc.core.RpcRequest;
 import com.lidachui.simpleRpc.core.RpcResponse;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,18 +47,20 @@ public class JsonSerializer implements Serializer {
             switch (messageType) {
                 case 0:
                     RpcRequest request = objectMapper.readValue(bytes, RpcRequest.class);
-                    Object[] objects = new Object[request.getParams().length];
-                    for (int i = 0; i < objects.length; i++) {
-                        Class<?> paramsType = request.getParamsTypes()[i];
-                        // Jackson处理转换为Java对象
-                        if (!paramsType.isAssignableFrom(request.getParams()[i].getClass())) {
-                            objects[i] =
+                    if ( Objects.nonNull(request.getParams())){
+                        Object[] objects = new Object[request.getParams().length];
+                        for (int i = 0; i < objects.length; i++) {
+                            Class<?> paramsType = request.getParamsTypes()[i];
+                            // Jackson处理转换为Java对象
+                            if (!paramsType.isAssignableFrom(request.getParams()[i].getClass())) {
+                                objects[i] =
                                     objectMapper.convertValue(request.getParams()[i], paramsType);
-                        } else {
-                            objects[i] = request.getParams()[i];
+                            } else {
+                                objects[i] = request.getParams()[i];
+                            }
                         }
+                        request.setParams(objects);
                     }
-                    request.setParams(objects);
                     obj = request;
                     break;
                 case 1:

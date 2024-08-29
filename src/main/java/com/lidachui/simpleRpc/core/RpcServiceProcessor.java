@@ -18,7 +18,14 @@ public class RpcServiceProcessor implements BeanPostProcessor {
             throws BeansException {
         Class<?> beanClass = bean.getClass();
         Class<?>[] interfaces = beanClass.getInterfaces();
-
+        if (beanClass.isAnnotationPresent(RpcService.class)){
+            try {
+                serviceProvider.provideServiceInterface(bean);
+            } catch (Exception e) {
+                // 记录错误日志并继续处理其他Bean
+                e.printStackTrace();
+            }
+        }
         for (Class<?> iface : interfaces) {
             if (iface.isAnnotationPresent(RpcService.class)) {
                 try {
