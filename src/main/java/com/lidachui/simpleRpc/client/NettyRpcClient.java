@@ -58,10 +58,10 @@ public class NettyRpcClient implements RpcClient {
             AttributeKey<RpcResponse> key = AttributeKey.valueOf(NETTY_KEY);
             RpcResponse response = channel.attr(key).get();
             return response;
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return RpcResponse.fail(e,"RPC请求发送失败");
         }
-        return null;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class NettyRpcClient implements RpcClient {
 
             // 关闭通道时，标记 promise 完成
             channel.closeFuture().addListener(closeFuture -> promise.setSuccess());
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             callback.onFailure(e);
         }
     }
