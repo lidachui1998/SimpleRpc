@@ -38,7 +38,11 @@ public class RpcResponse {
      * @return {@code RpcResponse }
      */
     public static RpcResponse success(Object data) {
-        return RpcResponse.builder().code(200).data(data).dataType(data.getClass()).build();
+        return RpcResponse.builder()
+            .code(200)
+            .data(data)
+            .dataType(data != null ? data.getClass() : Void.class)
+            .build();
     }
 
     /**

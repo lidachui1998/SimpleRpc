@@ -66,11 +66,13 @@ public class JsonSerializer implements Serializer {
                 case 1:
                     RpcResponse response = objectMapper.readValue(bytes, RpcResponse.class);
                     if (response.getCode().equals(SUCCESS)) {
-                        Class<?> dataType = response.getDataType();
-                        // Jackson处理转换为Java对象
-                        if (!dataType.isAssignableFrom(response.getData().getClass())) {
-                            response.setData(
+                        if (Objects.nonNull(response.getData())){
+                            Class<?> dataType = response.getDataType();
+                            // Jackson处理转换为Java对象
+                            if (!dataType.isAssignableFrom(response.getData().getClass())) {
+                                response.setData(
                                     objectMapper.convertValue(response.getData(), dataType));
+                            }
                         }
                         obj = response;
                         break;
