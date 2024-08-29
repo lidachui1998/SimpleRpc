@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
  */
 /** 依次按照自定义的消息格式写入，传入的数据为request或者response 需要持有一个serialize器，负责将传入的对象序列化成字节数组 */
 @AllArgsConstructor
-public class MyEncode extends MessageToByteEncoder {
+public class RpcEncode extends MessageToByteEncoder {
     private Serializer serializer;
 
     @Override

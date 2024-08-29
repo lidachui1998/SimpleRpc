@@ -1,8 +1,8 @@
 package com.lidachui.simpleRpc.client;
 
 import com.lidachui.simpleRpc.serialize.JsonSerializer;
-import com.lidachui.simpleRpc.serialize.MyDecode;
-import com.lidachui.simpleRpc.serialize.MyEncode;
+import com.lidachui.simpleRpc.serialize.RpcDecode;
+import com.lidachui.simpleRpc.serialize.RpcEncode;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -32,9 +32,9 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
         //    pipeline.addLast(new ObjectEncoder());
         //    pipeline.addLast(new ObjectDecoder(className -> Class.forName(className)));
         // 使用自定义的编解码器
-        pipeline.addLast(new MyDecode());
+        pipeline.addLast(new RpcDecode());
         // 编码需要传入序列化器，这里是json，还支持ObjectSerializer，也可以自己实现其他的
-        pipeline.addLast(new MyEncode(new JsonSerializer()));
+        pipeline.addLast(new RpcEncode(new JsonSerializer()));
         pipeline.addLast(new NettyClientHandler());
     }
 }

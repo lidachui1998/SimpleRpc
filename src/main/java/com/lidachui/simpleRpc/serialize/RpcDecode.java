@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * @version: 1.0
  */
 @AllArgsConstructor
-public class MyDecode extends ByteToMessageDecoder {
-    private static final Logger logger = LoggerFactory.getLogger(MyDecode.class);
+public class RpcDecode extends ByteToMessageDecoder {
+    private static final Logger logger = LoggerFactory.getLogger(RpcDecode.class);
 
 
     @Override
