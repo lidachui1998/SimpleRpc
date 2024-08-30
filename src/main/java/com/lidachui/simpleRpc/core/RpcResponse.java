@@ -53,18 +53,18 @@ public class RpcResponse {
      * @return {@code RpcResponse }
      */
     public static RpcResponse fail(Throwable ex, String... otherMsgValues) {
-        StringBuilder printMessage = new StringBuilder();
+        StringBuilder errorMessage = new StringBuilder();
         for (String otherMsgValue : otherMsgValues) {
-            printMessage.append("=====").append(otherMsgValue).append("===== \n");
+            errorMessage.append("=====").append(otherMsgValue).append("===== \n");
         }
         try {
-            printMessage.append(LogExceptionUtil.getExceptionMessage(ex));
+            errorMessage.append(LogExceptionUtil.getExceptionMessage(ex));
         } catch (Exception e) {
-            printMessage
+            errorMessage
                     .append("Error occurred while getting exception message: ")
                     .append(e.getMessage());
         }
-        return RpcResponse.builder().code(500).message(printMessage.toString()).dataType(String.class).build();
+        return RpcResponse.builder().code(500).message(errorMessage.toString()).dataType(String.class).build();
     }
 
     /**
